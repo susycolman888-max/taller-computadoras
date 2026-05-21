@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de Computadoras</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#08162A;--navy2:#0E2040;--navy3:#162D52;
+  --red:#E8341C;--red2:#FF5A3C;
+  --white:#FFFFFF;--offwhite:#F2F6FC;
+  --gray:#7A90AA;--lightgray:#E0E8F0;
+}
+body{font-family:'Poppins',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{background:rgba(8,22,42,0.93);backdrop-filter:blur(16px);position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:14px;height:62px;padding:0 32px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
+.nav-logo-box{width:34px;height:34px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-brand{font-size:15px;font-weight:700;color:#fff;letter-spacing:-0.3px}
+.nav-brand em{color:var(--red2);font-style:normal}
+.nav-spacer{flex:1}
+.nav-pill{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);padding:7px 16px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:.3px;transition:all .2s}
+.nav-pill:hover{background:rgba(255,255,255,0.13);color:#fff}
+
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden;min-height:92vh;display:flex;align-items:center;background:var(--navy)}
+.hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.cross-float{position:absolute;color:var(--red);font-weight:900;line-height:1;animation:floatUp linear infinite;opacity:0;user-select:none}
+@keyframes floatUp{0%{transform:translateY(0) rotate(0deg);opacity:0}10%{opacity:.18}80%{opacity:.10}100%{transform:translateY(-110vh) rotate(360deg);opacity:0}}
+.bin-float{position:absolute;font-size:11px;font-family:monospace;font-weight:700;color:rgba(232,52,28,0.12);animation:floatUp linear infinite;letter-spacing:2px;white-space:nowrap}
+.glow-blob{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero-inner{max-width:1160px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 420px;gap:80px;align-items:center;position:relative;z-index:10;width:100%}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,52,28,0.15);border:1px solid rgba(232,52,28,0.35);color:#FF8A75;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:22px;letter-spacing:1px;text-transform:uppercase}
+h1.hero-title{font-size:56px;font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:22px}
+h1.hero-title .red{color:var(--red2);display:block}
+.hero-desc{font-size:16px;color:rgba(255,255,255,0.55);line-height:1.75;margin-bottom:36px;max-width:460px}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--navy);padding:15px 32px;border-radius:14px;font-size:16px;font-weight:800;border:none;cursor:pointer;font-family:inherit;transition:all .25s;letter-spacing:-0.3px;box-shadow:0 8px 32px rgba(232,52,28,0.35)}
+.hero-cta:hover{background:var(--red2);color:#fff;transform:translateY(-2px);box-shadow:0 12px 40px rgba(232,52,28,0.5)}
+.hero-cta .plus{width:28px;height:28px;background:var(--red);border-radius:7px;display:flex;align-items:center;justify-content:center;transition:background .25s;flex-shrink:0}
+.hero-cta:hover .plus{background:rgba(255,255,255,0.25)}
+.hero-card{background:rgba(22,45,82,0.7);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);border-radius:22px;padding:30px;position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:-40px;right:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(232,52,28,.2),transparent 70%);pointer-events:none}
+.hc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.35);margin-bottom:18px}
+.hc-row{display:flex;align-items:center;gap:12px;padding:13px 14px;background:rgba(255,255,255,0.05);border-radius:12px;margin-bottom:8px;border:1px solid rgba(255,255,255,0.06)}
+.hc-row:last-child{margin-bottom:0}
+.hc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.hc-name{font-size:14px;color:rgba(255,255,255,0.65);flex:1;font-weight:500}
+.hc-num{font-size:22px;font-weight:800;letter-spacing:-1px}
+.hero-card-footer{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);font-size:12px;color:rgba(255,255,255,0.3);text-align:center}
+
+/* ── SECCIÓN BLANCA ── */
+.white-section{background:var(--offwhite);padding:72px 32px}
+.ws-inner{max-width:1160px;margin:0 auto}
+.section-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:8px}
+.section-title{font-size:36px;font-weight:800;color:var(--navy);letter-spacing:-1px;margin-bottom:10px}
+.section-sub{font-size:15px;color:var(--gray);margin-bottom:48px;line-height:1.6;max-width:520px}
+.form-grid{display:grid;grid-template-columns:1fr 380px;gap:36px;align-items:start}
+.form-card{background:white;border-radius:22px;padding:38px;box-shadow:0 4px 48px rgba(8,22,42,0.09);border:1.5px solid var(--lightgray)}
+.fc-head{display:flex;align-items:center;gap:14px;margin-bottom:30px;padding-bottom:22px;border-bottom:2px solid var(--offwhite)}
+.fc-icon{width:46px;height:46px;background:var(--red);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fc-head h2{font-size:19px;font-weight:800;color:var(--navy);letter-spacing:-.3px}
+.fc-head p{font-size:12px;color:var(--gray);margin-top:1px}
+.field{margin-bottom:17px}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.field label .req{color:var(--red)}
+.field input,.field select,.field textarea{width:100%;padding:12px 16px;border:1.5px solid var(--lightgray);border-radius:10px;font-family:inherit;font-size:14px;color:var(--navy);background:white;transition:all .2s;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--navy3);box-shadow:0 0 0 3px rgba(22,45,82,0.07)}
+.field input.err,.field select.err,.field textarea.err{border-color:var(--red)}
+.field textarea{resize:vertical;min-height:100px}
+.field-row{display:grid;grid-template-columns:100px 1fr;gap:13px}
+.form-errmsg{background:#FFF0EE;color:#C0392B;padding:11px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:15px;border:1px solid #FFCFCA;display:none}
+.submit-btn{width:100%;padding:15px;background:var(--red);border:none;border-radius:12px;color:white;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px;letter-spacing:-.2px}
+.submit-btn:hover{background:var(--red2);transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,52,28,.4)}
+.submit-btn:disabled{background:#aaa;cursor:not-allowed;transform:none;box-shadow:none}
+.side-col{display:flex;flex-direction:column;gap:16px}
+.scard{background:white;border-radius:18px;padding:24px;border:1.5px solid var(--lightgray);box-shadow:0 2px 20px rgba(8,22,42,.05)}
+.scard h3{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.step{display:flex;gap:12px;margin-bottom:14px}
+.step:last-child{margin-bottom:0}
+.step-n{width:26px;height:26px;min-width:26px;background:var(--red);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white}
+.step-t strong{display:block;font-size:13px;font-weight:600;color:var(--navy);margin-bottom:1px}
+.step-t span{font-size:12px;color:var(--gray)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:white;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,.3);transition:transform .35s cubic-bezier(.34,1.56,.64,1);z-index:999;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ── SUCCESS ── */
+.success-wrap{display:none;flex-direction:column;align-items:center;text-align:center;padding:72px 20px}
+.si{width:80px;height:80px;background:rgba(26,125,78,.12);border:2px solid rgba(26,125,78,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
+.s-title{font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-.8px;margin-bottom:10px}
+.s-desc{font-size:15px;color:var(--gray);max-width:400px;line-height:1.7;margin-bottom:28px}
+.ticket-sum{background:white;border:1.5px solid var(--lightgray);border-radius:18px;padding:24px;max-width:360px;width:100%;text-align:left;margin-bottom:24px;box-shadow:0 4px 24px rgba(8,22,42,.07)}
+.ts-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:14px;border-bottom:1.5px solid var(--lightgray)}
+.ts-hd span{font-weight:700;font-size:15px;color:var(--navy)}
+.ts-id{background:#FFF0EE;color:var(--red);font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px}
+.ts-row{display:flex;gap:8px;margin-bottom:8px;font-size:13px}
+.ts-row:last-child{margin-bottom:0}
+.ts-k{color:var(--gray);min-width:78px}
+.ts-v{color:var(--navy);font-weight:600}
+.back-btn{background:var(--navy);color:white;border:none;padding:12px 28px;border-radius:11px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s}
+.back-btn:hover{background:var(--navy3)}
+
+/* ── LOGIN ── */
+.login-page{display:none;min-height:70vh;align-items:center;justify-content:center;padding:40px 20px;background:var(--offwhite)}
+.login-card{background:white;border-radius:26px;padding:52px 44px;max-width:380px;width:100%;text-align:center;box-shadow:0 12px 72px rgba(8,22,42,.12);border:1.5px solid var(--lightgray)}
+.li{width:62px;height:62px;background:var(--navy);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 22px}
+.l-title{font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.5px;margin-bottom:6px}
+.l-sub{font-size:13px;color:var(--gray);margin-bottom:28px;line-height:1.5}
+.login-card .field input{text-align:center;letter-spacing:6px;font-size:18px}
+.l-btn{width:100%;padding:14px;background:var(--navy);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s;margin-bottom:14px}
+.l-btn:hover{background:var(--navy3)}
+.l-back{background:none;border:none;color:var(--gray);cursor:pointer;font-size:13px;font-family:inherit;font-weight:500}
+.l-back:hover{color:var(--navy)}
+.l-err{font-size:13px;color:var(--red);margin-bottom:12px;font-weight:600;display:none}
+
+/* ── ADMIN ── */
+.admin-page{display:none}
+.adm-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:36px 32px;border-bottom:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden}
+.adm-hero::before{content:'+';position:absolute;right:-20px;top:-20px;font-size:220px;font-weight:900;color:rgba(232,52,28,.06);line-height:1;pointer-events:none}
+.adm-inner{max-width:1160px;margin:0 auto}
+.adm-title{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.adm-sub{font-size:14px;color:rgba(255,255,255,.4)}
+.adm-hd-row{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:26px}
+.adm-exit{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.65);padding:8px 18px;border-radius:9px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;transition:all .15s}
+.adm-exit:hover{background:rgba(255,255,255,.13);color:#fff}
+/* Link box en admin */
+.adm-link-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.adm-link-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:4px}
+.adm-link-url{font-size:12px;font-family:monospace;color:rgba(255,255,255,.6);word-break:break-all;flex:1}
+.adm-copy-btn{background:var(--red);border:none;color:white;padding:8px 16px;border-radius:8px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;flex-shrink:0}
+.adm-copy-btn:hover{background:var(--red2)}
+.adm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.adm-stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:20px 18px}
+.adm-sval{font-size:34px;font-weight:900;letter-spacing:-1.5px;line-height:1}
+.adm-slbl{font-size:11px;color:rgba(255,255,255,.4);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-top:4px}
+.adm-body{background:var(--offwhite);padding:36px 32px;min-height:400px}
+.adm-body-inner{max-width:1160px;margin:0 auto}
+.f-row{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;align-items:center}
+.fb{padding:7px 18px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;border:1.5px solid var(--lightgray);background:white;color:var(--gray);transition:all .15s}
+.fb.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.refresh-btn{margin-left:auto;background:white;border:1.5px solid var(--lightgray);color:var(--gray);padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:6px}
+.refresh-btn:hover{border-color:var(--navy);color:var(--navy)}
+.tickets-wrap{display:flex;flex-direction:column;gap:10px}
+.tk{background:white;border-radius:16px;border:1.5px solid var(--lightgray);overflow:hidden;transition:box-shadow .15s}
+.tk:hover{box-shadow:0 4px 20px rgba(8,22,42,.09)}
+.tk-hd{padding:16px 20px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.tk-name{font-weight:700;font-size:15px;color:var(--navy)}
+.tk-info{font-size:13px;color:var(--gray);margin-top:3px}
+.tk-time{font-size:11px;color:#B0C0D4;margin-top:2px}
+.bdg{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+.bdg-id{background:#E6F1FB;color:#0d2137}
+.bdg-p{background:#FFF0EE;color:#C0392B}
+.bdg-w{background:#FFF8E6;color:#A0670A}
+.bdg-ok{background:#E3F5EB;color:#1A7D4E}
+.tk-body{border-top:1.5px solid var(--lightgray);padding:16px 20px;background:#FAFBFD}
+.tk-dlbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray);margin-bottom:6px}
+.tk-desc{font-size:14px;color:var(--navy);line-height:1.65;margin-bottom:16px}
+.tk-acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tk-acts > span{font-size:12px;color:var(--gray);margin-right:4px}
+.sbtn{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;border:1.5px solid;transition:all .1s}
+.delbtn{margin-left:auto;padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:1.5px solid #FFCFCA;background:transparent;color:#C0392B;font-family:inherit;font-weight:500}
+.delbtn:hover{background:#FFF0EE}
+.empty-tk{text-align:center;padding:64px 20px;color:var(--gray)}
+.empty-tk p{font-size:15px;font-weight:500;margin-top:14px}
+.loading-tk{text-align:center;padding:48px;color:var(--gray);font-size:14px}
+
+/* ── FOOTER ── */
+footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding:36px 32px;text-align:center;position:relative;overflow:hidden}
+footer::before{content:'TALLER DE COMPUTADORAS';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:64px;font-weight:900;letter-spacing:-2px;color:rgba(255,255,255,.02);white-space:nowrap;pointer-events:none}
+.ft-brand{font-size:17px;font-weight:800;margin-bottom:6px;letter-spacing:-.3px}
+.ft-brand em{color:var(--red2);font-style:normal}
+.ft-creators{font-size:13px;color:rgba(255,255,255,.35);margin-bottom:4px}
+.ft-creators strong{color:rgba(255,255,255,.65);font-weight:600}
+.ft-yr{font-size:11px;color:rgba(255,255,255,.18)}
+
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:40px}
+  .form-grid{grid-template-columns:1fr}
+  .adm-stats{grid-template-columns:repeat(2,1fr)}
+  h1.hero-title{font-size:40px}
+}
+@media(max-width:600px){
+  .hero-inner,.ws-inner,.adm-inner,.adm-body-inner{padding:0 16px}
+  .white-section,.adm-hero,.adm-body,footer{padding-left:16px;padding-right:16px}
+  .nav-inner{padding:0 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showView('form')">
+      <div class="nav-logo-box">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="6.5" y="0" width="5" height="18" rx="2" fill="white"/><rect x="0" y="6.5" width="18" height="5" rx="2" fill="white"/></svg>
+      </div>
+      <span class="nav-brand">Taller de <em>Computadoras</em></span>
+    </div>
+    <div class="nav-spacer"></div>
+    <button class="nav-pill" id="navAdminBtn" onclick="showView('login')">🔒 Panel técnico</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="sec-hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-grid"></div>
+  <div class="glow-blob" style="width:500px;height:500px;background:rgba(232,52,28,.12);top:-100px;right:-100px"></div>
+  <div class="glow-blob" style="width:400px;height:400px;background:rgba(22,45,82,.4);bottom:-80px;left:-60px"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">
+        <svg width="12" height="12" viewBox="0 0 12 12"><rect x="4.5" y="0" width="3" height="12" rx="1.5" fill="#FF8A75"/><rect x="0" y="4.5" width="12" height="3" rx="1.5" fill="#FF8A75"/></svg>
+        Soporte técnico escolar
+      </div>
+      <h1 class="hero-title"><span style="color:#fff">Tu compu en</span><span class="red">buenas manos</span></h1>
+      <p class="hero-desc">¿Tenés un problema con la computadora de tu aula? Completá el formulario y nuestro equipo técnico irá a ayudarte.</p>
+      <button class="hero-cta" onclick="scrollToForm()">
+        <span class="plus"><svg width="14" height="14" viewBox="0 0 14 14"><rect x="5" y="0" width="4" height="14" rx="2" fill="white"/><rect x="0" y="5" width="14" height="4" rx="2" fill="white"/></svg></span>
+        Reportar un problema
+      </button>
+    </div>
+    <div>
+      <div class="hero-card">
+        <div class="hc-label">Tickets activos</div>
+        <div class="hc-row"><div class="hc-dot" style="background:#E74C3C"></div><span class="hc-name">Pendientes</span><span class="hc-num" id="hp">—</span></div>
+        <div class="hc-row"><div class="hc-dot" style="background:#F0B429"></div><span class="hc-name">En progreso</span><span class="hc-num" id="hg">—</span></div>
+        <div class="hc-row"><div class="hc-dot" style="background:#1DB96E"></div><span class="hc-name">Resueltos</span><span class="hc-num" id="hd">—</span></div>
+        <div class="hero-card-footer">Taller de Computadoras — Soporte escolar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULARIO -->
+<section class="white-section" id="sec-form">
+  <div class="ws-inner">
+    <div id="div-form">
+      <div class="section-eyebrow">Formulario de soporte</div>
+      <h2 class="section-title">¿Qué le está pasando a tu compu?</h2>
+      <p class="section-sub">Completá los datos y nos encargamos del resto. Tu solicitud llega al instante a nuestro equipo técnico.</p>
+      <div class="form-grid">
+        <div class="form-card">
+          <div class="fc-head">
+            <div class="fc-icon"><svg width="22" height="22" viewBox="0 0 22 22"><rect x="8" y="0" width="6" height="22" rx="2.5" fill="white"/><rect x="0" y="8" width="22" height="6" rx="2.5" fill="white"/></svg></div>
+            <div><h2>Nueva solicitud</h2><p>Campos con <span style="color:var(--red)">*</span> son obligatorios</p></div>
+          </div>
+          <div class="field"><label>Nombre del/la docente <span class="req">*</span></label><input type="text" id="f-nombre" placeholder="Ej: Prof. García"></div>
+          <div class="field"><label>Curso / Aula <span class="req">*</span></label><input type="text" id="f-curso" placeholder="Ej: 3°A – Aula 12"></div>
+          <div class="field field-row">
+            <div><label>PCs <span class="req">*</span></label><input type="number" id="f-pcs" value="1" min="1" max="60"></div>
+            <div>
+              <label>Tipo de problema <span class="req">*</span></label>
+              <select id="f-tipo">
+                <option value="">Seleccioná...</option>
+                <option>PC no enciende</option>
+                <option>Pantalla sin señal / Monitor negro</option>
+                <option>Internet / Red caída</option>
+                <option>Software bloqueado / Error</option>
+                <option>Teclado o mouse sin respuesta</option>
+                <option>PC muy lenta</option>
+                <option>Problema con impresora</option>
+                <option>Otro</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label>Descripción <span class="req">*</span></label><textarea id="f-desc" placeholder="Contanos qué está pasando. ¿Cuándo empezó? ¿Qué aparece en pantalla?"></textarea></div>
+          <div id="form-err" class="form-errmsg">⚠ Completá todos los campos obligatorios</div>
+          <button class="submit-btn" id="submit-btn" onclick="submitForm()">
+            <svg width="18" height="18" viewBox="0 0 18 18"><rect x="6.5" y="0" width="5" height="18" rx="2.5" fill="white"/><rect x="0" y="6.5" width="18" height="5" rx="2.5" fill="white"/></svg>
+            Enviar solicitud de soporte
+          </button>
+        </div>
+        <div class="side-col">
+          <div class="scard">
+            <h3><svg width="17" height="17" viewBox="0 0 17 17" fill="none"><rect x="6" y="0" width="5" height="17" rx="2" fill="#E8341C"/><rect x="0" y="6" width="17" height="5" rx="2" fill="#E8341C"/></svg>¿Cómo funciona?</h3>
+            <div class="step"><div class="step-n">1</div><div class="step-t"><strong>Completás el formulario</strong><span>Contanos qué está pasando con tus equipos</span></div></div>
+            <div class="step"><div class="step-n">2</div><div class="step-t"><strong>El equipo recibe tu ticket</strong><span>Nos llega al instante con todos los datos</span></div></div>
+            <div class="step"><div class="step-n">3</div><div class="step-t"><strong>Vamos a tu aula</strong><span>Un técnico pasa a revisar y solucionar</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-wrap" id="div-success">
+      <div class="si"><svg width="38" height="38" viewBox="0 0 38 38"><polyline points="7,20 15,28 31,11" stroke="#1A7D4E" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="s-title">¡Ticket enviado!</div>
+      <p class="s-desc">Tu solicitud fue registrada. Nuestro equipo técnico fue notificado y pasará por tu aula a la brevedad.</p>
+      <div class="ticket-sum" id="ticket-sum"></div>
+      <button class="back-btn" onclick="showView('form')">← Volver al formulario</button>
+    </div>
+  </div>
+</section>
+
+<!-- LOGIN -->
+<div class="login-page" id="sec-login">
+  <div class="login-card">
+    <div class="li"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+    <div class="l-title">Panel técnico</div>
+    <p class="l-sub">Solo para el equipo de soporte.</p>
+    <div class="field"><input type="password" id="lpwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="l-err" id="lerr">Contraseña incorrecta</div>
+    <button class="l-btn" onclick="doLogin()">Ingresar al panel</button>
+    <button class="l-back" onclick="showView('form')">← Volver</button>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="admin-page" id="sec-admin">
+  <div class="adm-hero">
+    <div class="adm-inner">
+      <div class="adm-hd-row">
+        <div><div class="adm-title">Panel de soporte técnico</div><div class="adm-sub">Taller de Computadoras — todos los tickets registrados</div></div>
+        <button class="adm-exit" onclick="showView('form')">← Salir del panel</button>
+      </div>
+      <!-- Link QR solo visible acá -->
+      <div class="adm-link-box">
+        <div style="flex:1;min-width:200px">
+          <div class="adm-link-label">🔗 Link para el QR del aula</div>
+          <div class="adm-link-url" id="adm-link-url">Cargando...</div>
+        </div>
+        <button class="adm-copy-btn" onclick="copyLink()">Copiar link</button>
+      </div>
+      <div class="adm-stats" id="adm-stats"></div>
+    </div>
+  </div>
+  <div class="adm-body">
+    <div class="adm-body-inner">
+      <div class="f-row" id="adm-filters">
+        <button class="refresh-btn" onclick="loadTickets(true)">↺ Actualizar</button>
+      </div>
+      <div class="tickets-wrap" id="tickets-wrap"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-brand">Taller de <em>Computadoras</em></div>
+  <div class="ft-creators">Desarrollado por <strong>Ivan Colman</strong> &nbsp;·&nbsp; <strong>Nuñez Benjamin</strong> &nbsp;·&nbsp; <strong>Alama Martin</strong> &nbsp;·&nbsp; <strong>Vega Martin</strong></div>
+  <div class="ft-yr">© 2025 — Soporte técnico educativo</div>
+</footer>
+
+<!-- Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ═══════════════════════════════════════════
+   ⚠  REEMPLAZÁ ESTOS DOS VALORES
+   con los de tu proyecto en supabase.com
+════════════════════════════════════════════ */
+const SUPABASE_URL  = 'PEGAR_TU_URL_AQUI';
+const SUPABASE_KEY  = 'PEGAR_TU_ANON_KEY_AQUI';
+
+/* ── CONFIG ── */
+const PASS = 'tecnico2025';
+const EMOJIS = {'PC no enciende':'⚡','Pantalla sin señal / Monitor negro':'🖥️','Internet / Red caída':'🌐','Software bloqueado / Error':'💻','Teclado o mouse sin respuesta':'⌨️','PC muy lenta':'🐢','Problema con impresora':'🖨️','Otro':'🔧'};
+const ST = {
+  pendiente:    {label:'Pendiente',   bdg:'bdg-p',  bg:'#FFF0EE',col:'#C0392B',brd:'#C0392B'},
+  'en progreso':{label:'En progreso', bdg:'bdg-w',  bg:'#FFF8E6',col:'#A0670A',brd:'#D49000'},
+  resuelto:     {label:'Resuelto',    bdg:'bdg-ok', bg:'#E3F5EB',col:'#1A7D4E',brd:'#1A7D4E'}
+};
+
+/* ── SUPABASE ── */
+let db = null;
+let tickets = [];
+let filt = 'all', exp = null;
+
+function initDB(){
+  try {
+    const { createClient } = supabase;
+    db = createClient(SUPABASE_URL, SUPABASE_KEY);
+    return true;
+  } catch(e) {
+    console.error('Supabase no conectado:', e);
+    return false;
+  }
+}
+
+async function loadTickets(showToast = false){
+  if(!db){ renderAdmin(); return; }
+  try {
+    const { data, error } = await db.from('tickets').select('*').order('created_at', {ascending: false});
+    if(error) throw error;
+    tickets = data || [];
+    updateHero();
+    renderAdmin();
+    if(showToast) toast('✓ Tickets actualizados');
+  } catch(e) {
+    console.error(e);
+    toast('Error al cargar tickets');
+  }
+}
+
+async function insertTicket(tk){
+  if(!db) throw new Error('Sin conexión');
+  const { error } = await db.from('tickets').insert([tk]);
+  if(error) throw error;
+}
+
+async function updateStatus(id, status){
+  if(!db) return;
+  const { error } = await db.from('tickets').update({status}).eq('id', id);
+  if(error){ toast('Error al actualizar'); return; }
+  await loadTickets();
+}
+
+async function deleteTicket(id){
+  if(!confirm('¿Eliminar este ticket?')) return;
+  const { error } = await db.from('tickets').delete().eq('id', id);
+  if(error){ toast('Error al eliminar'); return; }
+  if(exp===id) exp=null;
+  await loadTickets();
+}
+
+/* ── HERO COUNTS ── */
+function updateHero(){
+  document.getElementById('hp').textContent = tickets.filter(t=>t.status==='pendiente').length;
+  document.getElementById('hg').textContent = tickets.filter(t=>t.status==='en progreso').length;
+  document.getElementById('hd').textContent = tickets.filter(t=>t.status==='resuelto').length;
+}
+
+/* ── VIEWS ── */
+function showView(v){
+  document.getElementById('sec-hero').style.display  = 'none';
+  document.getElementById('sec-form').style.display  = 'none';
+  document.getElementById('sec-login').style.display = 'none';
+  document.getElementById('sec-admin').style.display = 'none';
+  document.getElementById('div-form').style.display    = '';
+  document.getElementById('div-success').style.display = 'none';
+  document.getElementById('navAdminBtn').style.display = '';
+
+  if(v==='form'){
+    document.getElementById('sec-hero').style.display = '';
+    document.getElementById('sec-form').style.display = '';
+  } else if(v==='success'){
+    document.getElementById('sec-form').style.display   = '';
+    document.getElementById('div-form').style.display   = 'none';
+    document.getElementById('div-success').style.cssText = 'display:flex;flex-direction:column;align-items:center';
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else if(v==='login'){
+    document.getElementById('sec-login').style.display = 'flex';
+    document.getElementById('navAdminBtn').style.display = 'none';
+    document.getElementById('lpwd').value = '';
+    document.getElementById('lerr').style.display = 'none';
+  } else if(v==='admin'){
+    document.getElementById('sec-admin').style.display = 'block';
+    document.getElementById('navAdminBtn').style.display = 'none';
+    document.getElementById('adm-link-url').textContent = window.location.href;
+    loadTickets();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+
+function scrollToForm(){ document.getElementById('sec-form').scrollIntoView({behavior:'smooth'}); }
+
+/* ── FORM ── */
+async function submitForm(){
+  const n=document.getElementById('f-nombre').value.trim();
+  const c=document.getElementById('f-curso').value.trim();
+  const p=document.getElementById('f-pcs').value;
+  const t=document.getElementById('f-tipo').value;
+  const d=document.getElementById('f-desc').value.trim();
+  if(!n||!c||!t||!d){ document.getElementById('form-err').style.display='block'; return; }
+  document.getElementById('form-err').style.display='none';
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ Enviando...';
+
+  const now = new Date();
+  const tk = {
+    id: 'hdc_'+Date.now(),
+    short_id: '#'+Math.floor(1000+Math.random()*9000),
+    nombre: n, curso: c, pcs: parseInt(p)||1, tipo: t, descripcion: d,
+    status: 'pendiente',
+    date_str: now.toLocaleString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})
+  };
+
+  try {
+    await insertTicket(tk);
+    tickets.unshift(tk);
+    updateHero();
+    const em = EMOJIS[tk.tipo]||'🔧';
+    document.getElementById('ticket-sum').innerHTML =
+      `<div class="ts-hd"><span>Resumen del ticket</span><span class="ts-id">${tk.short_id}</span></div>
+       <div class="ts-row"><span class="ts-k">Docente</span><span class="ts-v">${tk.nombre}</span></div>
+       <div class="ts-row"><span class="ts-k">Curso</span><span class="ts-v">${tk.curso}</span></div>
+       <div class="ts-row"><span class="ts-k">PCs</span><span class="ts-v">${tk.pcs} equipo${tk.pcs>1?'s':''}</span></div>
+       <div class="ts-row"><span class="ts-k">Problema</span><span class="ts-v">${em} ${tk.tipo}</span></div>`;
+    ['f-nombre','f-curso','f-desc'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('f-pcs').value='1';
+    document.getElementById('f-tipo').value='';
+    showView('success');
+  } catch(e) {
+    toast('❌ Error al enviar. Revisá la conexión.');
+    console.error(e);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18"><rect x="6.5" y="0" width="5" height="18" rx="2.5" fill="white"/><rect x="0" y="6.5" width="18" height="5" rx="2.5" fill="white"/></svg> Enviar solicitud de soporte';
+  }
+}
+
+/* ── LOGIN ── */
+function doLogin(){
+  if(document.getElementById('lpwd').value===PASS){ showView('admin'); }
+  else{ document.getElementById('lerr').style.display='block'; }
+}
+
+/* ── COPY LINK ── */
+function copyLink(){
+  navigator.clipboard.writeText(window.location.href).then(()=>{
+    toast('✓ Link copiado al portapapeles');
+  }).catch(()=>{ prompt('Copiá este link:', window.location.href); });
+}
+
+/* ── ADMIN RENDER ── */
+function renderAdmin(){
+  const cnt = {
+    total: tickets.length,
+    pendiente: tickets.filter(t=>t.status==='pendiente').length,
+    'en progreso': tickets.filter(t=>t.status==='en progreso').length,
+    resuelto: tickets.filter(t=>t.status==='resuelto').length
+  };
+  document.getElementById('adm-stats').innerHTML = [
+    {l:'Total',v:cnt.total,c:'#5B9BD5'},
+    {l:'Pendientes',v:cnt.pendiente,c:'#E74C3C'},
+    {l:'En progreso',v:cnt['en progreso'],c:'#F0B429'},
+    {l:'Resueltos',v:cnt.resuelto,c:'#1DB96E'}
+  ].map(s=>`<div class="adm-stat"><div class="adm-sval" style="color:${s.c}">${s.v}</div><div class="adm-slbl">${s.l}</div></div>`).join('');
+
+  document.getElementById('adm-filters').innerHTML =
+    [['all','Todos'],['pendiente','Pendientes'],['en progreso','En progreso'],['resuelto','Resueltos']].map(([k,l])=>
+      `<button class="fb ${filt===k?'on':''}" onclick="setFilt('${k}')">${l}</button>`
+    ).join('') +
+    `<button class="refresh-btn" onclick="loadTickets(true)">↺ Actualizar</button>`;
+
+  const list = filt==='all' ? tickets : tickets.filter(t=>t.status===filt);
+  if(!list.length){
+    document.getElementById('tickets-wrap').innerHTML =
+      `<div class="empty-tk"><svg width="44" height="44" viewBox="0 0 24 24" fill="none"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="#7A90AA" stroke-width="1.5"/></svg><p>No hay tickets en esta categoría</p></div>`;
+    return;
+  }
+  document.getElementById('tickets-wrap').innerHTML = list.map(t=>{
+    const sc=ST[t.status]||ST.pendiente, em=EMOJIS[t.tipo]||'🔧', isExp=exp===t.id;
+    const sBtns = Object.keys(ST).map(s=>{
+      const sc2=ST[s], a=t.status===s;
+      return `<button class="sbtn" onclick="updateStatus('${t.id}','${s}')" style="background:${a?sc2.bg:'transparent'};color:${a?sc2.col:'#7A90AA'};border-color:${a?sc2.brd:'#E0E8F0'}">${sc2.label}</button>`;
+    }).join('');
+    return `
+      <div class="tk">
+        <div class="tk-hd" onclick="toggleExp('${t.id}')">
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:4px">
+              <span class="tk-name">${t.nombre}</span>
+              <span class="bdg bdg-id">${t.short_id}</span>
+              <span class="bdg ${sc.bdg}">${sc.label}</span>
+            </div>
+            <div class="tk-info">${t.curso} · ${t.pcs} PC${t.pcs>1?'s':''} · ${em} ${t.tipo}</div>
+            <div class="tk-time">${t.date_str}</div>
+          </div>
+          <span style="color:#B0C0D4;font-size:12px">${isExp?'▲':'▼'}</span>
+        </div>
+        ${isExp?`<div class="tk-body"><div class="tk-dlbl">Descripción</div><div class="tk-desc">${t.descripcion}</div><div class="tk-acts"><span>Estado:</span>${sBtns}<button class="delbtn" onclick="deleteTicket('${t.id}')">🗑 Eliminar</button></div></div>`:''}
+      </div>`;
+  }).join('');
+}
+
+function setFilt(f){ filt=f; renderAdmin(); }
+function toggleExp(id){ exp=exp===id?null:id; renderAdmin(); }
+
+/* ── TOAST ── */
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2800);
+}
+
+/* ── FONDO ANIMADO ── */
+function buildBg(){
+  const bg=document.getElementById('heroBg');
+  for(let i=0;i<22;i++){
+    const el=document.createElement('div'); el.className='cross-float';
+    const sz=Math.random()*42+14;
+    el.style.cssText=`font-size:${sz}px;left:${Math.random()*100}%;bottom:${Math.random()*-20}%;animation-duration:${Math.random()*18+10}s;animation-delay:${Math.random()*12}s`;
+    el.textContent='+'; bg.appendChild(el);
+  }
+  ['01001000','10110101','11001010','01101101','00110110'].forEach((b,i)=>{
+    const el=document.createElement('div'); el.className='bin-float';
+    el.style.cssText=`left:${i*20+Math.random()*12}%;bottom:-5%;animation-duration:${20+i*3}s;animation-delay:${i*2}s`;
+    el.textContent=b; bg.appendChild(el);
+  });
+}
+
+window.addEventListener('load',()=>{ initDB(); buildBg(); loadTickets(); });
+</script>
+</body>
+</html>
