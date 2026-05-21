@@ -394,6 +394,43 @@ footer::before{content:'TALLER DE COMPUTADORAS';position:absolute;top:50%;left:5
       </div>
  
     </div>
+    <!-- TURNO TARDE -->
+    <div style="margin-top:32px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.08)">
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:1px;text-transform:uppercase">
+          🌙 Turno Tarde
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:760px;margin:0 auto">
+ 
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:24px 20px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:6px">Martes</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;padding:5px 14px;border-radius:20px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.5)" stroke-width="2"/><path d="M12 6v6l4 2" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+            14:00 – 18:00 hs
+          </div>
+        </div>
+ 
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:24px 20px;text-align:center;position:relative">
+          <div id="hoy-badge-tarde" style="position:absolute;top:12px;right:12px;background:#E8341C;color:white;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;letter-spacing:0.5px;display:none">HOY</div>
+          <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:6px">Jueves</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;padding:5px 14px;border-radius:20px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.5)" stroke-width="2"/><path d="M12 6v6l4 2" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+            14:00 – 18:00 hs
+          </div>
+        </div>
+ 
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:24px 20px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:6px">Viernes</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;padding:5px 14px;border-radius:20px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.5)" stroke-width="2"/><path d="M12 6v6l4 2" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/></svg>
+            14:00 – 18:00 hs
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+ 
     <div style="text-align:center;margin-top:28px;font-size:13px;color:rgba(255,255,255,0.3)">
       ⚠ Fuera de estos horarios podés dejar tu ticket igual — lo atendemos en el próximo turno disponible
     </div>
@@ -659,10 +696,13 @@ function buildBg(){
 window.addEventListener('load',()=>{ initDB(); buildBg(); loadTickets(); highlightToday(); });
  
 function highlightToday(){
-  const day = new Date().getDay(); // 0=dom,1=lun,2=mar,3=mie,4=jue,5=vie,6=sab
+  const day = new Date().getDay();
+  const hour = new Date().getHours();
   const badge = document.getElementById('hoy-badge');
-  if(day===2||day===4||day===5){ // mar, jue, vie
-    if(badge) badge.style.display='block';
+  const badgeTarde = document.getElementById('hoy-badge-tarde');
+  if(day===2||day===4||day===5){
+    if(hour < 12){ if(badge) badge.style.display='block'; }
+    else{ if(badgeTarde) badgeTarde.style.display='block'; }
   }
 }
 </script>
